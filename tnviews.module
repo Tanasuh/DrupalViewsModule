@@ -1,0 +1,39 @@
+<?php 
+
+/**
+* @file
+*/
+function tnviews_block_info() {
+  $blocks = array();
+  $blocks['tnviews'] = array(
+    'info' => t('tnviews'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function tnviews_views_api() {
+  return array(
+    'api' => '3.0',
+  );
+}
+
+/**
+ * Implements hook_views_default_views().
+ */    
+function tnviews_views_default_views() {
+  $views = array();
+  $path = drupal_get_path('module', 'tnviews') . '/views/*.inc';
+
+  foreach(glob($path) as $file) {
+    require_once $file;
+    $views[$view->name] = $view;
+    unset($view);
+  }
+
+  return $views;
+}
+
+?>
